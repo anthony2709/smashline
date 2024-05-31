@@ -967,25 +967,27 @@ impl VirtualClass for L2CFighterWrapper {
     }
 }
 
-#[vtables::vtable]
-mod l2c_fighter_wrapper {
-    fn destructor(&mut self);
-    fn deleter(&mut self);
-    fn coroutine_yield(&mut self);
-    fn start_coroutine(&mut self, coroutine_index: i32, name: Hash40, state: &mut i32) -> u32;
-    fn resume_coroutine(&mut self, coroutine_index: i32, state: &mut i32) -> u32;
-    fn get_unused_coroutine_index(&self, max: i32) -> i32;
-    fn clean_coroutine(&mut self, index: i32) -> bool;
-    fn set_coroutine_release_control(&mut self, release_control: bool);
-    fn is_coroutine_release_control(&self) -> bool;
-    fn set_status_scripts(&mut self);
-    fn sys_line_system_init(&mut self);
-    fn sub_begin_added_lines(&mut self);
-    fn sys_line_status_end_control(&mut self);
-    fn sub_end_added_lines(&mut self);
-    fn RESET(&mut self);
-}
+use vtables::vtable;
+use hash40::Hash40;
 
+#[vtable]
+pub mod l2c_fighter_wrapper {
+    pub fn destructor(&mut self);
+    pub fn deleter(&mut self);
+    pub fn coroutine_yield(&mut self);
+    pub fn start_coroutine(&mut self, coroutine_index: i32, name: Hash40, state: &mut i32) -> u32;
+    pub fn resume_coroutine(&mut self, coroutine_index: i32, state: &mut i32) -> u32;
+    pub fn get_unused_coroutine_index(&self, max: i32) -> i32;
+    pub fn clean_coroutine(&mut self, index: i32) -> bool;
+    pub fn set_coroutine_release_control(&mut self, release_control: bool);
+    pub fn is_coroutine_release_control(&self) -> bool;
+    pub fn set_status_scripts(&mut self);
+    pub fn sys_line_system_init(&mut self);
+    pub fn sub_begin_added_lines(&mut self);
+    pub fn sys_line_status_end_control(&mut self);
+    pub fn sub_end_added_lines(&mut self);
+    pub fn RESET(&mut self);
+}
 #[skyline::hook(offset = 0x64bbd0)]
 fn create_agent_status_fighter(
     object: &mut BattleObject,
